@@ -2,7 +2,7 @@
 
 process selenoprofiles {
 
-    publishDir '$params.outdir', mode: 'copy', overwrite: true
+    publishDir 'data/', mode: 'copy', overwrite: true
     
     container "$projectDir/singularity/selenoprofiles.sif"
 
@@ -15,6 +15,6 @@ process selenoprofiles {
 
     script:
         """
-        selenoprofiles -o ouputs -t $genome_fasta -s $species -p  ${params.clade},machinery -output_gtf_file all_annotations.gtf
+        selenoprofiles -o outputs -t $genome_fasta -s $species -p  ${params.clade},machinery -output_gtf_file all_annotations.gtf
         """
 }

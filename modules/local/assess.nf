@@ -2,7 +2,7 @@
 
 process assess {
     
-    publishDir '$params.outdir', mode: 'copy', overwrite: true
+    publishDir 'data/', mode: 'copy', overwrite: true
 
     container "$projectDir/singularity/assess.sif"
 
