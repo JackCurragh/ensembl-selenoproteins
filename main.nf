@@ -8,6 +8,7 @@ log.info """\
     =========================================
     species: ${params.species}
     accession: ${params.accession}
+    clade: ${params.clade}
     =========================================
 """
 

@@ -5,13 +5,14 @@ process RAPID {
     input:
         val(species)
         val(accession)
+        val(filetype)
 
     output:
-        file "*.fa"
+        file "*"
 
     script:
         """
-        python $projectDir/scripts/rapid_fetch.py -s '${species}' -a '${accession}'
+        python $projectDir/scripts/rapid_fetch.py -s '${species}' -a '${accession}' --file-type '${filetype}'
         gzip -d *.gz
         """
 

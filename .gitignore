@@ -11,3 +11,4 @@ data/
 *.html
 *.zip
 singularity/*
+*.gtf.gz
