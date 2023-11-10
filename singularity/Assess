@@ -1,0 +1,17 @@
+BootStrap: docker
+From: continuumio/miniconda3:4.9.2
+
+%post
+    conda create -yn assess python=3.8 && \
+    echo "conda activate assess" >> /root/.bashrc && \
+    conda install -c conda-forge -c bioconda pyranges=0.0.120 pandas=1.1.5 numpy=1.19.2 && \
+    pip install easyterm==0.7.2 && \
+    git clone https://github.com/maxtico/assess_annotation.git /root/assess_annotation && \
+    chmod +x /root/assess_annotation/checking_annotations.py && \
+    echo 'export PATH=$PATH:/root/assess_annotation' >> /root/.bashrc
+
+%environment
+    export PATH=$PATH:/opt/conda/envs/assess/bin:/root/assess_annotation
+
+%runscript
+    exec /bin/bash -c "source /opt/conda/bin/activate assess && exec $@"
