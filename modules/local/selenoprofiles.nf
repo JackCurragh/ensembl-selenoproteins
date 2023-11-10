@@ -1,7 +1,9 @@
 
 
 process selenoprofiles {
-    container "$projectDir/singularity/selenoprofiles.sif"
+    
+    publishDir '$params.outdir', mode: 'copy', overwrite: true
+    
     input:
         file(genome_fasta)
         val(species)
