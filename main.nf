@@ -1,49 +1,18 @@
-#!/usr/bin/env nextflow
+nextflow.enable.dsl = 2
 
-/// Specify to use Nextflow DSL version 2
-nextflow.enable.dsl=2
+include { selenoproteins } from './subworkflows/local/selenoproteins.nf'
 
-/// Import modules and subworkflows
-include { quality_control } from './subworkflows/local/quality_control.nf'
-
-// Log the parameters
 log.info """\
 
-=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
-||                        INSERT PIPELINE NAME                             
-=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
-||  Parameters                                                             
-=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
-||  input_dir   : ${params.input_dir}                                     
-||  outDir      : ${params.output_dir}                                        
-||  workDir     : ${workflow.workDir}                                     
-=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
-
+    m i R N A    N F    P I P E L I N E
+    =========================================
+    species: ${params.species}
+    accession: ${params.accession}
+    =========================================
 """
-// Help Message to prompt users to specify required parameters
-def help() {
-    log.info"""
-  Usage:  nextflow run main.nf --input <path_to_fastq_dir> 
 
-  Required Arguments:
-
-  --input    Path to directory containing fastq files.
-
-  Optional Arguments:
-
-  --outDir	Path to output directory. 
-	
-""".stripIndent()
-}
-
-/// Define the main workflow
 workflow {
-    /// Define the input channels
-    fastq_ch = Channel.fromPath("${params.input_dir}/*.fastq.gz")
-                        .ifEmpty { exit 1, "No fastq files found in ${params.input_dir}" }
-
-    /// Run the subworkflow
-    quality_control(fastq_ch)
+    selenoproteins(params.species, params.accession)
 }
 
 workflow.onComplete {

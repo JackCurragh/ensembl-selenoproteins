@@ -1,20 +1,18 @@
-Bootstrap: docker
-From: ubuntu:latest
+BootStrap: docker
+From: continuumio/miniconda3:4.9.2
 
 %post
-    # Install necessary packages
-    apt-get update && apt-get install -y \
-        wget \
-        unzip \
-        default-jre \
-        perl
+    conda create -yn sp4 python=3.8 && \
+    echo "conda activate sp4" >> /root/.bashrc && \
+    conda install -c mmariotti -c anaconda -c bioconda -c biobuilds selenoprofiles4 && \
+    echo "selenoprofiles -setup" >> /root/.bashrc && \
+    echo "selenoprofiles -download" >> /root/.bashrc && \
+    echo "echo 'selenoprofiles_data_dir=/path/to/your/data/directory/' > /root/.selenoprofiles_config.txt" >> /root/.bashrc && \
+    conda install -c etetoolkit ete3 && \
+    conda install matplotlib
 
-    # Download and install FastQC
-    wget https://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.11.9.zip && \
-        unzip fastqc_v0.11.9.zip && \
-        chmod +x FastQC/fastqc && \
-        ln -s /FastQC/fastqc /usr/local/bin/fastqc
+%environment
+    export PATH=$PATH:/opt/conda/envs/sp4/bin
 
 %runscript
-    # Set the default command
-    exec "$@"
+    exec /bin/bash -c "source /opt/conda/bin/activate sp4 && exec $@"

@@ -1,17 +1,27 @@
-FROM ubuntu:latest
+# Use an official Miniconda3 image with Python 3.8
+FROM continuumio/miniconda3:4.9.2
 
-# Install necessary packages
-RUN apt-get update && apt-get install -y \
-    wget \
-    unzip \
-    default-jre \
-    perl
+# Set the working directory to /app
+WORKDIR /app
 
-# Download and install FastQC
-RUN wget https://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.11.9.zip && \
-    unzip fastqc_v0.11.9.zip && \
-    chmod +x FastQC/fastqc && \
-    ln -s /FastQC/fastqc /usr/local/bin/fastqc
+# Create a new environment named sp4 and activate it
+RUN conda create -yn sp4 python=3.8
+RUN echo "conda activate sp4" >> ~/.bashrc
 
-# Set the default command
-CMD ["ls"]
+# Install selenoprofiles4 and its dependencies
+RUN conda install -c mmariotti -c anaconda -c bioconda -c biobuilds selenoprofiles4
+
+# Run the selenoprofiles setup command
+RUN echo "selenoprofiles -setup" >> ~/.bashrc
+
+# Run the selenoprofiles download command
+RUN echo "selenoprofiles -download" >> ~/.bashrc
+
+# Set up config file and data directory paths
+RUN echo "echo 'selenoprofiles_data_dir=/path/to/your/data/directory/' > ~/.selenoprofiles_config.txt" >> ~/.bashrc
+
+# Install optional dependencies for selenoprofiles utilities
+RUN conda install -c etetoolkit ete3
+RUN conda install matplotlib
+
+CMD ["/bin/bash"]
