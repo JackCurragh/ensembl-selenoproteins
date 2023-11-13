@@ -2,6 +2,8 @@
 
 process RAPID {
 
+    container "$projectDir/singularity/rapid.sif"
+
     input:
         val(species)
         val(accession)
