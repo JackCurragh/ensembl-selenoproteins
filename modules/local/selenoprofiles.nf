@@ -2,7 +2,7 @@
 
 process selenoprofiles {
 
-    publishDir 'data/', mode: 'copy', overwrite: true
+    publishDir "data/${genome_fasta.baseName}", mode: 'copy', overwrite: true
     
     container "$projectDir/singularity/selenoprofiles.sif"
 

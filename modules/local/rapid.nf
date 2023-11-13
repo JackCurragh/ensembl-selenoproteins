@@ -1,7 +1,7 @@
 
 
 process RAPID {
-
+    
     container "$projectDir/singularity/rapid.sif"
 
     input:
