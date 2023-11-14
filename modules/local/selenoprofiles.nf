@@ -6,6 +6,9 @@ process selenoprofiles {
     
     container "$projectDir/singularity/selenoprofiles.sif"
 
+    maxForks 20
+    time '9h'
+    
     input:
         file(genome_fasta)
         tuple val(species), val(accession), val(clade)
