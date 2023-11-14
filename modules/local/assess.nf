@@ -1,7 +1,7 @@
 
 
 process assess {
-    publishDir "data/selenoprofiles", mode: 'copy', overwrite: true
+    publishDir "data/selenoprofiles/${species_out}_${accession}", mode: 'copy', overwrite: true
 
     container "$projectDir/singularity/assess.sif"
 
