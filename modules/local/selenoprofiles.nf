@@ -17,6 +17,7 @@ process selenoprofiles {
     output:
         path "*_selenoprofiles_annotations.gtf", emit: prediction
         path genome_gtf, emit: ref_gtf
+        tuple val(species), val(accession), val(clade), emit: meta
 
     script:
         species_out = species.replaceAll(' ', '_')
