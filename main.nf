@@ -7,13 +7,15 @@ log.info """\
     m i R N A    N F    P I P E L I N E
     =========================================
     species: ${params.species}
-    accession: ${params.accession}
+    accessions: ${params.accession}
     clade: ${params.clade}
     =========================================
 """
 
+
+
 workflow {
-    selenoproteins(params.species, params.accession)
+    selenoproteins(params.species, params.accession, params.clade)
 }
 
 workflow.onComplete {

@@ -10,13 +10,11 @@ workflow selenoproteins {
     take:
         species
         accession
+        clade
 
     main:
-        fasta_ch                =   RAPID_FASTA(species, accession, 'fasta')
-        gtf_ch                  =   RAPID_GTF(species, accession, 'gtf')
-        selenoproteins_ch       =   selenoprofiles(fasta_ch, species)
-        assess_ch               =   assess(fasta_ch, selenoproteins_ch, gtf_ch, )
-
-    emit:
-        fasta_ch
+        fasta_ch                =   RAPID_FASTA(species, accession, clade, 'fasta')
+        gtf_ch                  =   RAPID_GTF(species, accession, clade, 'gtf')
+        selenoproteins_ch       =   selenoprofiles(fasta_ch, species, accession, clade)
+        assess_ch               =   assess(fasta_ch, selenoproteins_ch, gtf_ch)
 }
