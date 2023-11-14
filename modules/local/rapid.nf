@@ -9,7 +9,8 @@ process RAPID {
         val(filetype)
 
     output:
-        path("*")
+        path("*"), emit: file
+        tuple val(species), val(accession), val(clade), emit: meta
 
     script:
         """

@@ -9,13 +9,14 @@ process assess {
         file(genome_fasta)
         file(selenoprofiles_gtf)
         file(genome_gtf)
+        tuple val(species), val(accession), val(clade)
 
     output:
         file "${species_out}_${accession}_Ensembl_transcript.csv"
         file "${species_out}_${accession}_aggregated.csv"
 
     script:
-        species_out = ${params.species}.replaceAll(' ', '_')
+        species_out = ${species}.replaceAll(' ', '_')
         """
         python $projectDir/scripts/checking_annotations.py \\
             -s $selenoprofiles_gtf \\

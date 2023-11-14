@@ -8,13 +8,11 @@ include { assess } from '../../modules/local/assess.nf'
 workflow selenoproteins {
 
     take:
-        species
-        accession
-        clade
+        input_ch
 
     main:
-        fasta_ch                =   RAPID_FASTA(species, accession, clade, 'fasta')
-        gtf_ch                  =   RAPID_GTF(species, accession, clade, 'gtf')
-        selenoproteins_ch       =   selenoprofiles(fasta_ch, species, accession, clade)
-        assess_ch               =   assess(fasta_ch, selenoproteins_ch, gtf_ch)
+        fasta_ch                =   RAPID_FASTA(input_ch, 'fasta')
+        gtf_ch                  =   RAPID_GTF(fasta_ch.meta, 'gtf')
+        selenoproteins_ch       =   selenoprofiles(fasta_ch.file, input_ch, gtf_ch.file)
+        assess_ch               =   assess(fasta_ch.file, selenoproteins_ch.prediction, selenoproteins_ch.ref_gtf, input_ch)
 }

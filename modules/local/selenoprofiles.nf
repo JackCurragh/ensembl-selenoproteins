@@ -8,15 +8,16 @@ process selenoprofiles {
 
     input:
         file(genome_fasta)
-        val(species)
-        val(accession)
-        val(clade)
+        tuple val(species), val(accession), val(clade)
+        file(genome_gtf)
         
     output:
-        file "*.gtf"
+        path "*_selenoprofiles_annotations.gtf", emit: prediction
+        path genome_gtf, emit: ref_gtf
 
     script:
+        species_out = species.replaceAll(' ', '_')
         """
-        selenoprofiles -o outputs -t $genome_fasta -s $species -p  $clade,machinery -output_gtf_file ${species}_${accession}_selenoprofiles_annotations.gtf
+        selenoprofiles -o outputs -t $genome_fasta -s "$species" -p  $clade,machinery -output_gtf_file ${species_out}_${accession}_selenoprofiles_annotations.gtf
         """
 }

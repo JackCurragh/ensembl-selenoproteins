@@ -15,7 +15,12 @@ log.info """\
 
 
 workflow {
-    selenoproteins(params.species, params.accession, params.clade)
+    input_ch    =   Channel
+                        .fromPath(params.sample_sheet)
+                        .splitCsv(header: true, sep: '\t')
+                        .map { row -> tuple("${row.Species}", "${row.Accession}", "${row.Clade}") }
+
+    selenoproteins(input_ch)
 }
 
 workflow.onComplete {
