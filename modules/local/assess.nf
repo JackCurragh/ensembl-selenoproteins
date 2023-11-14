@@ -16,7 +16,7 @@ process assess {
         file "${species_out}_${accession}_aggregated.csv"
 
     script:
-        species_out = ${species}.replaceAll(' ', '_')
+        species_out = species.replaceAll(' ', '_')
         """
         python $projectDir/scripts/checking_annotations.py \\
             -s $selenoprofiles_gtf \\
