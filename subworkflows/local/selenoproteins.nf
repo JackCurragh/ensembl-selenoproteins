@@ -14,5 +14,6 @@ workflow selenoproteins {
         fasta_ch                =   RAPID_FASTA(input_ch, 'fasta')
         gtf_ch                  =   RAPID_GTF(fasta_ch.meta, 'gtf')
         selenoproteins_ch       =   selenoprofiles(fasta_ch.file, input_ch, gtf_ch.file)
+        selenoproteins_ch.meta.view()
         assess_ch               =   assess(fasta_ch.file, selenoproteins_ch.prediction, selenoproteins_ch.ref_gtf, selenoproteins_ch.meta)
 }
