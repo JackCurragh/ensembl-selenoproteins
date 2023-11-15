@@ -5,7 +5,7 @@ process assess {
 
     container "$projectDir/singularity/assess.sif"
 
-    errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
+    // errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
 
     input:
         file(genome_fasta)

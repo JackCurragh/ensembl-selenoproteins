@@ -6,7 +6,7 @@ process RAPID {
     
     container "$projectDir/singularity/rapid.sif"
 
-    maxForks 10
+    maxForks 2
 
     input:
         tuple val(species), val(accession), val(clade)
