@@ -8,7 +8,7 @@ process selenoprofiles {
 
     errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
 
-    maxForks 20
+    maxForks 200
     time '9h'
     
     input:
