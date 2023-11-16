@@ -10,15 +10,17 @@ process RAPID {
 
     input:
         tuple val(species), val(accession), val(clade)
-        val(filetype)
 
     output:
-        path("*"), emit: file
+        tuple val(accession), path("*.fa*"), emit: fasta
+        tuple val(accession), path("*.gtf*"), emit: gtf
         tuple val(species), val(accession), val(clade), emit: meta
 
     script:
         """
-        python $projectDir/scripts/rapid_fetch.py -s '${species}' -a '${accession}' --file-type '${filetype}'
+        python $projectDir/scripts/rapid_fetch.py -s '${species}' -a '${accession}' --file-type 'gtf'
+        python $projectDir/scripts/rapid_fetch.py -s '${species}' -a '${accession}' --file-type 'fasta'
+
         gzip -d *.gz
         """
 }

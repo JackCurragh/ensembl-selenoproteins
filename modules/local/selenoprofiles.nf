@@ -12,9 +12,9 @@ process selenoprofiles {
     time '9h'
     
     input:
-        file(genome_fasta)
         tuple val(species), val(accession), val(clade)
-        file(genome_gtf)
+        tuple val(accession), file(genome_fasta)
+        tuple val(accession), file(genome_gtf)
         
     output:
         path "*_selenoprofiles_annotations.gtf", emit: prediction
