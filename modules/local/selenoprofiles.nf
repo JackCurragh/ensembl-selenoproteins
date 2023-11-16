@@ -19,6 +19,7 @@ process selenoprofiles {
     output:
         path "*_selenoprofiles_annotations.gtf", emit: prediction
         path genome_gtf, emit: ref_gtf
+        path genome_fasta, emit: ref_fasta
         tuple val(species), val(accession), val(clade), emit: meta
 
     script:
