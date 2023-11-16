@@ -92,6 +92,7 @@ def get_latest_release_date(species: str, assembly: str) -> str:
             current_date = (datetime.strptime(current_date, "%Y_%m") - timedelta(days=30)).strftime("%Y_%m")
 
         print("Error: Could not determine the latest release date.")
+        print(base_url)
         return None
     else:
         print(f"Error fetching release dates: {response.status_code}")
