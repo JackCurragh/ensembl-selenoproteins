@@ -66,30 +66,32 @@ def check_url_validity(url: str) -> bool:
         return False
 
 
-def get_latest_release_date(species: str, assembly: str) -> str:
-    base_url = f"https://ftp.ensembl.org/pub/rapid-release/species/{species}/{assembly}/ensembl/geneset/"
+def get_latest_release_date(species: str, assembly: str, annotation_types=['ensembl', 'refseq', 'braker', 'community', 'genbank', 'flybase', 'wormbase', 'noninsdc']) -> str:
 
-    # Try to fetch the release dates
-    response = requests.get(base_url)
+    for annotation in annotation_types:
+        base_url = f"https://ftp.ensembl.org/pub/rapid-release/species/{species}/{assembly}/{annotation}/geneset/"
 
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.text, 'html.parser')
-        links = soup.find_all('a', href=True)
-        release_dates = [link['href'] for link in links if link['href'].count('/') == 1]
-        return max(release_dates) if release_dates else None
-    elif response.status_code == 404:
-        print(f"Directory not found. Trying to find the latest release date by progressively going back in time.")
+        # Try to fetch the release dates
+        response = requests.get(base_url)
 
-        # Attempt to find the latest release date by going back in time
-        current_date = datetime.utcnow().strftime("%Y_%m")
-        end_date = "2010_01"  # You can adjust the end date based on your preferences
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.text, 'html.parser')
+            links = soup.find_all('a', href=True)
+            release_dates = [link['href'] for link in links if link['href'].count('/') == 1]
+            return max(release_dates) if release_dates else None
+        elif response.status_code == 404:
+            print(f"Directory not found. Trying to find the latest release date by progressively going back in time.")
 
-        while current_date >= end_date:
-            if check_url_validity(f"{base_url}/{current_date}"):
-                print(f"Latest release date found: {current_date}")
-                return current_date
+            # Attempt to find the latest release date by going back in time
+            current_date = datetime.utcnow().strftime("%Y_%m")
+            end_date = "2010_01"  # You can adjust the end date based on your preferences
 
-            current_date = (datetime.strptime(current_date, "%Y_%m") - timedelta(days=30)).strftime("%Y_%m")
+            while current_date >= end_date:
+                if check_url_validity(f"{base_url}/{current_date}"):
+                    print(f"Latest release date found: {current_date}")
+                    return current_date
+
+                current_date = (datetime.strptime(current_date, "%Y_%m") - timedelta(days=30)).strftime("%Y_%m")
 
         print("Error: Could not determine the latest release date.")
         print(base_url)
