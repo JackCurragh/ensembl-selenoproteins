@@ -6,7 +6,7 @@ process RAPID {
     
     container "$projectDir/singularity/rapid.sif"
 
-    publishDir "$projectDir/outputs/rapid", pattern: '*.url', mode: 'copy'
+    publishDir "data/", pattern: '*.url', mode: 'copy'
 
     maxForks 20
 
