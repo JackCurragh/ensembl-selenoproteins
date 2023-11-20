@@ -20,7 +20,7 @@ process RAPID {
 
     script:
         """
-        python $projectDir/scripts/rapid_fetch.py -s '${species}' -a '${accession}' --file-type 'gtf' --write_url
+        python $projectDir/scripts/rapid_fetch.py -s '${species}' -a '${accession}' --file-type 'gtf' --write-url
         // python $projectDir/scripts/rapid_fetch.py -s '${species}' -a '${accession}' --file-type 'fasta'
 
         // gzip -d *.gz
