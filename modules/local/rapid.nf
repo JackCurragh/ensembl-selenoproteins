@@ -2,7 +2,7 @@
 
 process RAPID {
     
-    // errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
+    errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
     
     container "$projectDir/singularity/rapid.sif"
 
