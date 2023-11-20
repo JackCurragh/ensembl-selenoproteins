@@ -138,7 +138,7 @@ def main(args: argparse.Namespace):
     if release_date:
         url = build_url(args.file_type, args.species, args.assembly, release_date)
         if args.write_url:
-            output = os.path.join(args.output, f"{args.assembly}_rapid_annotations.urls")
+            output = os.path.join(args.output, f"{args.assembly}_rapid_annotations.url")
             with open(output, "a") as f:
                 f.write(f"{args.species}\t{args.assembly}\t{release_date.strip('/')}\t{url}\n")
         else:
