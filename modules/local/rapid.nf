@@ -14,8 +14,8 @@ process RAPID {
         tuple val(species), val(accession), val(clade)
 
     output:
-        tuple val(accession), path("*.fa*"), emit: fasta
-        tuple val(accession), path("*.gtf*"), emit: gtf
+        tuple val(accession), path("*.fa*"), emit: fasta, optional: true
+        tuple val(accession), path("*.gtf*"), emit: gtf, optional: true
         tuple val(species), val(accession), val(clade), emit: meta
 
     script:
