@@ -4,7 +4,7 @@ include { selenoproteins } from './subworkflows/local/selenoproteins.nf'
 
 log.info """\
 
-    m i R N A    N F    P I P E L I N E
+    S E L E N O    N F    P I P E L I N E
     =========================================
     species: ${params.species}
     accessions: ${params.accession}
