@@ -11,7 +11,7 @@ workflow selenoproteins {
 
     main:
         rapid_ch                =   RAPID(input_ch)
-        selenoproteins_ch       =   selenoprofiles(rapid_ch.meta, rapid_ch.fasta, rapid_ch.gtf)
+        // selenoproteins_ch       =   selenoprofiles(rapid_ch.meta, rapid_ch.fasta, rapid_ch.gtf)
 
-        assess_ch               =   assess(selenoproteins_ch.ref_fasta, selenoproteins_ch.prediction, selenoproteins_ch.ref_gtf, selenoproteins_ch.meta)
+        // assess_ch               =   assess(selenoproteins_ch.ref_fasta, selenoproteins_ch.prediction, selenoproteins_ch.ref_gtf, selenoproteins_ch.meta)
 }

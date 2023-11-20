@@ -2,9 +2,11 @@
 
 process RAPID {
     
-    errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
+    // errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
     
     container "$projectDir/singularity/rapid.sif"
+
+    publishDir "$projectDir/outputs/rapid", pattern: '*.url', mode: 'copy'
 
     maxForks 20
 
@@ -18,9 +20,9 @@ process RAPID {
 
     script:
         """
-        python $projectDir/scripts/rapid_fetch.py -s '${species}' -a '${accession}' --file-type 'gtf'
-        python $projectDir/scripts/rapid_fetch.py -s '${species}' -a '${accession}' --file-type 'fasta'
+        python $projectDir/scripts/rapid_fetch.py -s '${species}' -a '${accession}' --file-type 'gtf' --write_url
+        // python $projectDir/scripts/rapid_fetch.py -s '${species}' -a '${accession}' --file-type 'fasta'
 
-        gzip -d *.gz
+        // gzip -d *.gz
         """
 }

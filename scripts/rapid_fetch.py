@@ -137,8 +137,13 @@ def main(args: argparse.Namespace):
     release_date = get_latest_release_date(args.species, args.assembly)
     if release_date:
         url = build_url(args.file_type, args.species, args.assembly, release_date)
-        output = os.path.join(args.output, f"{args.assembly}_{release_date.strip('/')}.{args.file_type}.gz")
-        fetch_file(args.file_type, url, output)
+        if args.write_url:
+            output = os.path.join(args.output, f"rapid_annotations.urls")
+            with open(output, "a") as f:
+                f.write(f"{args.species}\t{args.assembly}\t{release_date.strip('/')}\t{url}\n")
+        else:
+            output = os.path.join(args.output, f"{args.assembly}_{release_date.strip('/')}.{args.file_type}.gz")
+            fetch_file(args.file_type, url, output)
     else:
         print("Error: Could not determine the latest release date.")
 
@@ -171,6 +176,11 @@ if __name__ == "__main__":
         choices=['fasta', 'gtf'],
         help="Type of file to download (fasta or gtf)",
         required=True,
+    )
+    parser.add_argument(
+        "--write-url",
+        action="store_true",
+        help="Write the URL to a file instead of downloading",
     )
     args = parser.parse_args()
     main(args)
