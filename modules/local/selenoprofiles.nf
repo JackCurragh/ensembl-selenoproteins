@@ -6,7 +6,7 @@ process selenoprofiles {
     
     container "${params.singularityDir}/singularity/selenoprofiles.sif"
 
-    // errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
+    errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
 
     maxForks 200
     time '9h'
