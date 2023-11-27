@@ -2,11 +2,11 @@
 
 process selenoprofiles {
 
-    // publishDir "data/selenoprofiles/${species_out}_${accession}", mode: 'copy', overwrite: true
+    publishDir "data/selenoprofiles/${species_out}_${accession}", mode: 'copy', overwrite: true
     
     container "$projectDir/singularity/selenoprofiles.sif"
 
-    errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
+    // errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
 
     maxForks 200
     time '9h'
