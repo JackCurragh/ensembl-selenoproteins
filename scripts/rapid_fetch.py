@@ -102,6 +102,10 @@ def build_url(file_type: str, species: str, assembly: str, release: str, annotat
             url = f"https://ftp.ensembl.org/pub/rapid-release/species/{species}/{assembly}/{annotation_type}/genome/{species}-{assembly}-softmasked.fa.gz"
             if check_url_validity(url):
                 return url
+            else:
+                url = f"https://ftp.ensembl.org/pub/rapid-release/species/{species}/{assembly}/{annotation_type}/genome/{species}-{assembly}-hardmasked.fa.gz"
+                if check_url_validity(url):
+                    return url
         else:
             raise ValueError(f"Could not find assembly {assembly} for species {species} in Ensembl Rapid release.")
     elif file_type == 'gtf':
