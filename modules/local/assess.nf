@@ -3,7 +3,7 @@
 process assess {
     publishDir "data/selenoprofiles/${species_out}_${accession}", mode: 'copy', overwrite: true
 
-    container "$projectDir/singularity/assess.sif"
+    container "${params.singularityDir}/singularity/assess.sif"
 
     errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
 

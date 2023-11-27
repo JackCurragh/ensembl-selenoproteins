@@ -4,7 +4,7 @@ process selenoprofiles {
 
     publishDir "data/selenoprofiles/${species_out}_${accession}", mode: 'copy', overwrite: true
     
-    container "$projectDir/singularity/selenoprofiles.sif"
+    container "${params.singularityDir}/singularity/selenoprofiles.sif"
 
     // errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
 
