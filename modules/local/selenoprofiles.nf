@@ -2,7 +2,7 @@
 
 process selenoprofiles {
 
-    publishDir "data/selenoprofiles/${species_out}_${accession}", mode: 'copy', overwrite: true
+    // publishDir "data/selenoprofiles/${species_out}_${accession}", mode: 'copy', overwrite: true
     
     container "$projectDir/singularity/selenoprofiles.sif"
 
