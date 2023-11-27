@@ -93,9 +93,7 @@ def get_latest_release_date(species: str, assembly: str, annotation_types=['ense
 
                 current_date = (datetime.strptime(current_date, "%Y_%m") - timedelta(days=30)).strftime("%Y_%m")
     else:
-        print("Error: Could not determine the latest release date.")
-        print(base_url)
-        return None
+        raise Exception("Error: Could not determine the latest release date. {base_url} may not exist. Date range checked: {end_date} to {current_date}")
 
 
 def build_url(file_type: str, species: str, assembly: str, release: str, annotation_types=['ensembl', 'refseq', 'braker', 'community', 'genbank', 'flybase', 'wormbase', 'noninsdc']) -> str:
@@ -112,7 +110,7 @@ def build_url(file_type: str, species: str, assembly: str, release: str, annotat
             if check_url_validity(url):
                 return url
         else:
-            raise ValueError(f"Could not find GTF file for assembly {assembly} and species {species} in Ensembl Rapid release.")
+            raise ValueError(f"Could not find GTF file for assembly {assembly} and species {species} in Ensembl Rapid release. Release {release} may not exist for this assembly")
     else:
         raise ValueError(f"Invalid file type: {file_type}")
 
